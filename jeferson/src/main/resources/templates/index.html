@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Spring CRUD</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </head>
+    <body>
+        <h1>Lista de Produtos(jeferson)</h1>
+        
+        <table border>
+            <thead>
+                <tr>
+                    <th>COD</th>
+                    <th>PRODUTO</th>
+                    <th>MARCA</th>
+                    <th>VALOR</th>
+                    <th>DETALHES</th>
+                    <th><!--coluna edit--></th>
+                    <th><!--coluna delete--></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="eachProduct : ${listProducts}">
+                    <td th:text="${eachProduct.cod_product}"></td>
+                    <td th:text="${eachProduct.name_product}"></td>
+                    <td th:text="${eachProduct.brand_product}"></td>
+                    <td th:text="${eachProduct.value_product}"></td>
+                    <td th:text="${eachProduct.detail_product}"></td>
+                    <td><a th:href="@{'/edit_product/' + ${eachProduct.cod_product}}">Editar</a></td>
+                    <td><a th:onclick="|confirmDelete('${eachProduct.cod_product}')|" href="#">Apagar</a></td>
+                </tr>
+            </tbody>
+        </table>
+        <br/>
+        <a href="add_product">Adicionar produto</a>
+        <script>
+            function confirmDelete(id) {
+                let result = confirm("Tem certeza que deseja excluir o item "+id+" ?");
+                let message = (result) ? "/delete_product/" + id : "#";
+                window.location.replace(message);
+            }
+        </script>
+    </body>
+</html>
